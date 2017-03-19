@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="zh-tw">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="favicon.ico">
+    <title>阿瓦隆小幫手</title>
+    <!-- Bootstrap core CSS -->
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="assets/my.css">
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">Project name</a>
+            </div>
+            <div id="navbar" class="collapse navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="#">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </div>
+            <!--/.nav-collapse -->
+        </div>
+    </nav>
+    <div class="container">
+        <div class="col-md-3 col-xs-6"><img class="img-thumbnail" src="images/merlin.jpg"></div>
+        <div class="col-md-3 col-xs-6"><img class="img-thumbnail" src="images/merlin.jpg"></div>
+        <div class="col-md-3 col-xs-6"><img class="img-thumbnail" src="images/merlin.jpg"></div>
+        <div class="col-md-3 col-xs-6"><img class="img-thumbnail" src="images/merlin.jpg"></div>
+        <button id="play-voice">go</button>
+        <form id="settings">
+            <h5>選擇語者</h5>
+            <div class="form-group">
+                <label class="radio-inline">
+                    <input type="radio" name="Speaker" value="Bruce" checked="">Bruce</label>
+                <label class="radio-inline">
+                    <input type="radio" name="Speaker" value="Theresa">Theresa</label>
+                <label class="radio-inline">
+                    <input type="radio" name="Speaker" value="Angela">Angela</label>
+            </div>
+            <div class="form-group">
+                <label>語音速度 (
+                    <span id="speed"></span> )</label>
+                <input class="bar" type="range" name="speed" min="-10" max="10" value="0" />
+            </div>
+            <h5>韻律調整</h5>
+            <div class="form-group">
+                <label class="radio-inline">
+                    <input type="radio" name="PitchSign" value="0" checked="">正常</label>
+                <label class="radio-inline">
+                    <input type="radio" name="PitchSign" value="1">像機器人</label>
+                <label class="radio-inline">
+                    <input type="radio" name="PitchSign" value="2">像外國人說中文</label>
+            </div>
+            <div class="form-group">
+                <label>音高 (
+                    <span id="PitchLevel"></span> )</label>
+                <input class="bar" type="range" name="PitchLevel" min="-10" max="10" value="0" />
+            </div>
+            <div class="form-group">
+                <label>抑揚頓挫 (
+                    <span id="PitchScale"></span> )</label>
+                <input class="bar" type="range" name="PitchScale" min="0" max="20" value="5" />
+            </div>
+        </form>
+        <div id="media"></div>
+        <div id="sheep-text">
+        </div>
+    </div>
+    <!-- /.container -->
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="//tts.itri.org.tw/TTScript/Text2SpeechJsApiV2.php?key=*3B*3A*3D*3A*3D*3A*3B*3A*3E*3B6*2A*14*2A*0Cl*035*18*01*07b*3Af*60d"></script>
+    <script src="assets/my.js"></script>
+</body>
+
+</html>
+<!--
+
+<!doctype html> 
+<html> 
+<head> 
+<script
+  src="//code.jquery.com/jquery-3.2.0.min.js"
+  integrity="sha256-JAW99MJVpJBGcbzEuXk4Az05s/XyDdBomFqNlM3ic+I="
+  crossorigin="anonymous"></script>
+<script language="javascript" src ="//tts.itri.org.tw/TTScript/Text2SpeechJsApiV2.php?key=*3B*3A*3D*3A*3D*3A*3B*3A*3E*3B6*2A*14*2A*0Cl*035*18*01*07b*3Af*60d"> </script> 
+</head> 
+<body> 
+<div id="content"> 
+<div id="mute">不想聽到的內容</div> 
+<div class="mute">不想聽到的內容</div> 
+將會聽到的內容 
+</div> 
+<button onclick="go()">go</button>
+<div id="media"></div>
+<script language="javascript"> 
+function go(){
+    var tts = new TTS(); 
+    tts.muteTag = "id:mute|class:mute"; 
+    tts.PlayerSet.hidden = false;
+    tts.PlayerSet.width = 100; 
+    tts.PlayerSet.height = 30;
+    tts.ConvertInit("id:content","media","Bruce","100","0","0","0","5");
+    $("#media img").trigger("click");
+}
+</script> 
+</body> 
+</html> -->
