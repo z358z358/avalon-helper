@@ -10,18 +10,29 @@ $(function() {
     if (window.location.hash) {
         hash = window.location.hash.substring(1); //Puts hash in variable, and removes the # character
         var urlSetting = JSON.parse('{"' + decodeURI(hash).replace(/"/g, '\\"').replace(/&/g, '","').replace(/=/g, '":"') + '"}')
-        console.log(urlSetting);
+            //console.log(urlSetting);
         for (var i in urlSetting) {
             $("input[name='" + i + "'][type='range']").val(urlSetting[i]);
-            $("input[name='" + i + "'][type='radio'][value='"+urlSetting[i]+"']").prop('checked', true);
-            console.log("input[name='" + i + "']",urlSetting[i]);
+            $("input[name='" + i + "'][type='radio'][value='" + urlSetting[i] + "']").prop('checked', true);
+            $("input[name='" + i + "'][type='hidden']").val(urlSetting[i]);
+            if (urlSetting[i] == '0') {
+                $(".click-card[data-role='" + i + "']").addClass('hover');
+            }
+            //console.log("input[name='" + i + "']",urlSetting[i]);
         }
-        refreshSetting();
+
     }
+    refreshSetting();
 
     $("body").on("change", "input", function() {
         window.location.hash = $("#settings").serialize();
         refreshSetting();
+    });
+
+    $(".click-card").click(function() {
+        var role = $(this).data("role");
+        $(this).toggleClass("hover");
+        $("input[name='" + role + "']").val($(this).hasClass("hover") ? '0' : '1').trigger("change");
     });
 
     $('#play-voice').click(function() {
