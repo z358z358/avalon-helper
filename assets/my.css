@@ -7,6 +7,10 @@
     text-align: center;
 }
 
+.fb-comments, .fb-comments * {
+  width:100% !important;
+}
+
 
 /* entire container, keeps perspective */
 

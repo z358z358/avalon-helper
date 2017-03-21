@@ -50,6 +50,17 @@ $(function() {
         console.log(speed, PitchSign);
     });
 
+    $('#reset').click(function() {
+        $('#media').html('');
+        $('form#settings')[0].reset();
+        $(".click-card").removeClass('hover');
+        $("input").trigger("change");
+    });
+
+    $("#share").jsSocials({
+        shares: ["twitter", "facebook", "googleplus", "linkedin", "pinterest", "stumbleupon", "whatsapp"]
+    });
+
     function refreshSetting() {
         speed = $("input[name='speed']").val();
         PitchSign = $("input[name='PitchSign']:checked").val();
