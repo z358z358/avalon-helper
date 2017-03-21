@@ -58,7 +58,7 @@ $(function() {
     });
 
     $("#share").jsSocials({
-        shares: ["twitter", "facebook", "googleplus", "linkedin", "pinterest", "stumbleupon", "whatsapp"]
+        shares: ["email", "twitter", "facebook", "googleplus", "linkedin", "pinterest", "stumbleupon", "pocket", "whatsapp", "viber", "messenger", "vkontakte", "telegram", "line"]
     });
 
     function refreshSetting() {
