@@ -4,7 +4,7 @@ var texts = {
 };
 
 $(function() {
-    var hash;
+    var hash,changeFlag = false;
     var speed, PitchSign, Speaker, PitchLevel, PitchScale;
 
     if (window.location.hash) {
@@ -37,6 +37,11 @@ $(function() {
 
     $('#play-voice').click(function() {
         $("#sheep-text").text(texts.basic);
+        var audio = $("#media audio");
+        if(changeFlag == false && audio){
+            audio[0].play();
+            return;
+        }
 
         var tts = new TTS();
         tts.muteTag = "id:mute|class:mute";
@@ -47,6 +52,7 @@ $(function() {
 
 
         $("#media img").trigger("click");
+        changeFlag = false;
         console.log(speed, PitchSign);
     });
 
@@ -62,6 +68,7 @@ $(function() {
     });
 
     function refreshSetting() {
+        changeFlag = true;
         speed = $("input[name='speed']").val();
         PitchSign = $("input[name='PitchSign']:checked").val();
         Speaker = $("input[name='Speaker']:checked").val();
