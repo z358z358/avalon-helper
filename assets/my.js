@@ -37,6 +37,7 @@ $(function() {
 
     $('#play-voice').click(function() {
         $("#iframe").attr('src','test.html');
+        return;
         $("#sheep-text").text(texts.basic);
         var audio = $("#media audio");
         if(changeFlag == false && audio){
