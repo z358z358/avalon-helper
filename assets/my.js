@@ -7,7 +7,7 @@ $(function() {
     var voiceCount = 0,
         voices;
 
-        resizeHeight();
+    resizeHeight();
     $(window).resize(resizeHeight);
 
     if (window.location.hash) {
@@ -89,6 +89,12 @@ $(function() {
         }
         voices[voiceCount].playbackRate = speed;
         voices[voiceCount].play();
+        voices[voiceCount].pause();
+
+        setTimeout(function() {
+            voices[voiceCount].currentTime = 0;
+            voices[voiceCount].play();
+        }, 2000);
     }
 
     function refreshSetting() {
