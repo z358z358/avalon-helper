@@ -56,7 +56,7 @@
     </nav>
     <div class="container">
         <div class="col-md-3 col-xs-6">
-            <div class="flip-container click-card" data-role="percival">
+            <div class="flip-container click-card together" data-role="percival">
                 <div class="flipper">
                     <div class="front">
                         <img class="img-thumbnail" src="images/percival.png">
@@ -68,7 +68,7 @@
             </div>
         </div>
         <div class="col-md-3 col-xs-6">
-            <div class="flip-container click-card" data-role="mormna">
+            <div class="flip-container click-card together" data-role="mormna">
                 <div class="flipper">
                     <div class="front">
                         <img class="img-thumbnail" src="images/mormna.png">
@@ -104,9 +104,10 @@
             </div>
         </div>
         <hr>
-        <div id="sheep-text"></div>
+        <p id="sheep-text">
+            請所有人閉上眼睛低頭雙手握拳放在自己面前，<span class="more only-oberon">除了奧伯倫以外</span>請壞人張開眼睛確認彼此身份，5，4，3，2，1，請壞人閉上眼睛，<span class="more only-mordred">除了莫德雷德之外</span>請所有壞人豎起你們的大拇指，請梅林張開眼睛確認壞人身份，5，4，3，2，1，請壞人收起大拇指請梅林閉上眼睛<span class="more only-percival">，請梅林和莫甘娜豎起你們的大拇指，請派希維爾張開眼睛確認身分，5，4，3，2，1，請梅林和莫甘娜收回大拇指請派希維爾閉上眼睛</span>，請所有人張開眼睛遊戲開始。
+        </p>
         <hr>
-        <iframe id="iframe"></iframe>
         <button id="play-voice" class="col-xs-6 btn btn-primary btn-lg">播放語音</button>
         <div id="media" class="col-xs-3"></div>
         <button id="reset" class="btn text-danger col-xs-3">初始化</button>
@@ -118,37 +119,14 @@
                 <label class="radio-inline">
                     <input type="radio" name="Speaker" value="Bruce" checked="">Bruce</label>
                 <label class="radio-inline">
-                    <input type="radio" name="Speaker" value="Theresa">Theresa</label>
-                <label class="radio-inline">
                     <input type="radio" name="Speaker" value="Angela">Angela</label>
                 <label class="radio-inline">
-                    <input type="radio" name="Speaker" value="TW_LIT_AKoan">台語女生語音(文讀台)</label>
-                <label class="radio-inline">
-                    <input type="radio" name="Speaker" value="TW_SPK_AKoan">台語女生語音(白話台)</label>
+                    <input type="radio" name="Speaker" value="AKoan">AKoan(台語)</label>
             </div>
             <div class="form-group">
                 <label>語音速度 (
                     <span id="speed"></span> )</label>
-                <input class="bar" type="range" name="speed" min="-10" max="10" value="0" />
-            </div>
-            <h5>韻律調整</h5>
-            <div class="form-group">
-                <label class="radio-inline">
-                    <input type="radio" name="PitchSign" value="0" checked="">正常</label>
-                <label class="radio-inline">
-                    <input type="radio" name="PitchSign" value="1">像機器人</label>
-                <label class="radio-inline">
-                    <input type="radio" name="PitchSign" value="2">像外國人說中文</label>
-            </div>
-            <div class="form-group">
-                <label>音高 (
-                    <span id="PitchLevel"></span> )</label>
-                <input class="bar" type="range" name="PitchLevel" min="-10" max="10" value="0" />
-            </div>
-            <div class="form-group">
-                <label>抑揚頓挫 (
-                    <span id="PitchScale"></span> )</label>
-                <input class="bar" type="range" name="PitchScale" min="0" max="20" value="5" />
+                <input class="bar" type="range" name="speed" min="0.5" max="2" value="1" step="0.1" />
             </div>
             <input type="hidden" name="oberon" value="1">
             <input type="hidden" name="mordred" value="1">
@@ -159,6 +137,35 @@
             <div>
                 <hr />
                 <div class="fb-comments" data-href="http://avalon-helper.onininon.com/avalon-helper/" data-numposts="5"></div>
+            </div>
+        </div>
+        <div class="voices hidden">
+            <div class="Bruce">
+                <audio controls src="voices/Bruce/1.mp3"></audio>
+                <audio controls src="voices/Bruce/2.mp3"></audio>
+                <audio controls src="voices/Bruce/3.mp3"></audio>
+                <audio controls src="voices/Bruce/4.mp3"></audio>
+                <audio controls src="voices/Bruce/5.mp3"></audio>
+                <audio controls src="voices/Bruce/6.mp3"></audio>
+                <audio controls src="voices/Bruce/7.mp3"></audio>
+            </div>
+            <div class="Angela">
+                <audio controls src="voices/Angela/1.mp3"></audio>
+                <audio controls src="voices/Angela/2.mp3"></audio>
+                <audio controls src="voices/Angela/3.mp3"></audio>
+                <audio controls src="voices/Angela/4.mp3"></audio>
+                <audio controls src="voices/Angela/5.mp3"></audio>
+                <audio controls src="voices/Angela/6.mp3"></audio>
+                <audio controls src="voices/Angela/7.mp3"></audio>
+            </div>
+            <div class="AKoan">
+                <audio controls src="voices/AKoan/1.mp3"></audio>
+                <audio controls src="voices/AKoan/2.mp3"></audio>
+                <audio controls src="voices/AKoan/3.mp3"></audio>
+                <audio controls src="voices/AKoan/4.mp3"></audio>
+                <audio controls src="voices/AKoan/5.mp3"></audio>
+                <audio controls src="voices/AKoan/6.mp3"></audio>
+                <audio controls src="voices/AKoan/7.mp3"></audio>
             </div>
         </div>
         <hr />

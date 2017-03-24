@@ -1,11 +1,12 @@
-var texts = {
-    "basic": "請所有人閉上雙眼，請所有壞人睜開眼睛確認彼此身份，3，2，1，請所有壞人閉上眼睛，請所有壞人豎起你的大拇指，請梅林睜開眼睛確認壞人身份，3，2，1，請壞人收起大拇指，請梅林閉上眼睛，遊戲開始"
-
-};
-
 $(function() {
-    var hash,changeFlag = false;
+    var hash, changeFlag = false,
+        playingFlag = false;
     var speed, PitchSign, Speaker, PitchLevel, PitchScale;
+    var oberon, mordred, percival, mormna;
+    var checkList = ['oberon', 'mordred', 'percival', 'mormna'];
+    var voiceCount = 0,
+        voices;
+
 
     if (window.location.hash) {
         hash = window.location.hash.substring(1); //Puts hash in variable, and removes the # character
@@ -25,37 +26,39 @@ $(function() {
     refreshSetting();
 
     $("body").on("change", "input", function() {
+        if(playingFlag){
+            $('#play-voice').trigger('click');
+        }
         window.location.hash = $("#settings").serialize();
         refreshSetting();
     });
 
     $(".click-card").click(function() {
         var role = $(this).data("role");
-        $(this).toggleClass("hover");
-        $("input[name='" + role + "']").val($(this).hasClass("hover") ? '0' : '1').trigger("change");
+        if (role == 'percival' || role == 'mormna') {
+            $(".together").toggleClass("hover");
+        } else {
+            $(this).toggleClass("hover");
+        }
+        $("input[type='hidden']").each(function() {
+            $(this).val($(".click-card[data-role='" + $(this).attr('name') + "']").hasClass("hover") ? '0' : '1');
+        });
+        $("input[type='hidden']").trigger("change");
     });
 
     $('#play-voice').click(function() {
-        $("#iframe").attr('src','test.html');
-        return;
-        $("#sheep-text").text(texts.basic);
-        var audio = $("#media audio");
-        if(changeFlag == false && audio){
-            audio[0].play();
-            return;
+        voices = $(".voices ." + Speaker + " audio");
+        if (playingFlag) {
+            voices[voiceCount].pause();
+            voices[voiceCount].currentTime = 0;
+            $("#play-voice").text('播放語音').removeClass('btn-danger');
+            voiceCount = 0;
+            playingFlag = false;
+        } else {
+            $("#play-voice").text('停止播放').addClass('btn-danger');
+            voiceCount = 0;
+            playVoice();
         }
-
-        var tts = new TTS();
-        tts.muteTag = "id:mute|class:mute";
-        tts.PlayerSet.hidden = false;
-        tts.PlayerSet.width = 100;
-        tts.PlayerSet.height = 30;
-        tts.ConvertInit("id:sheep-text", "media", Speaker, "100", speed, PitchLevel, PitchSign, PitchScale);
-
-
-        $("#media img").trigger("click");
-        changeFlag = false;
-        console.log(speed, PitchSign);
     });
 
     $('#reset').click(function() {
@@ -69,6 +72,23 @@ $(function() {
         shares: ["twitter", "facebook", "messenger", "line"]
     });
 
+    $("audio").bind('ended', function() {
+        voiceCount++;
+        playVoice();
+    });
+
+    function playVoice() {
+        playingFlag = true;
+        if (voiceCount >= 7) {
+            voiceCount = 0;
+            playingFlag = false;
+            $("#play-voice").text('播放語音').removeClass('btn-danger');
+            return;
+        }
+        voices[voiceCount].playbackRate = speed;
+        voices[voiceCount].play();
+    }
+
     function refreshSetting() {
         changeFlag = true;
         speed = $("input[name='speed']").val();
@@ -76,8 +96,22 @@ $(function() {
         Speaker = $("input[name='Speaker']:checked").val();
         PitchLevel = $("input[name='PitchLevel']").val();
         PitchScale = $("input[name='PitchScale']").val();
+        oberon = $("input[name='oberon']").val();
+        mordred = $("input[name='mordred']").val();
+        percival = $("input[name='percival']").val();
+        mormna = $("input[name='mormna']").val();
+        $("#sheep-text .more").hide();
+        for (var i = 0; i < checkList.length; i++) {
+            var check = eval(checkList[i]);
+            if (check == '1') {
+                $(".only-" + checkList[i]).show();
+            }
+
+        }
         $("#speed").text(speed);
         $("#PitchLevel").text(PitchLevel);
         $("#PitchScale").text(PitchScale);
+
+
     }
 });
