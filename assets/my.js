@@ -7,6 +7,8 @@ $(function() {
     var voiceCount = 0,
         voices;
 
+        resizeHeight();
+    $(window).resize(resizeHeight);
 
     if (window.location.hash) {
         hash = window.location.hash.substring(1); //Puts hash in variable, and removes the # character
@@ -26,7 +28,7 @@ $(function() {
     refreshSetting();
 
     $("body").on("change", "input", function() {
-        if(playingFlag){
+        if (playingFlag) {
             $('#play-voice').trigger('click');
         }
         window.location.hash = $("#settings").serialize();
@@ -111,7 +113,9 @@ $(function() {
         $("#speed").text(speed);
         $("#PitchLevel").text(PitchLevel);
         $("#PitchScale").text(PitchScale);
+    }
 
-
+    function resizeHeight() {
+        $('.one-card').css('height', $('.back').height());
     }
 });
