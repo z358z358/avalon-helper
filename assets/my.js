@@ -6,6 +6,8 @@ $(function() {
     var checkList = ['oberon', 'mordred', 'percival', 'mormna'];
     var voiceCount = 0,
         voices, audio;
+    voices = audiojs.createAll({ trackEnded: playVoice });
+    audio = voices[0];
 
     resizeHeight();
     $(window).resize(resizeHeight);
@@ -49,14 +51,17 @@ $(function() {
     });
 
     $('#play-voice').click(function() {
-        // Setup the player to autoplay the next track
-        voiceCount = 0;
-        voices = audiojs.createAll();
-        audio = voices[0];
-        var audioSrc = $(".voices ." + Speaker + " span").data('src');
-        console.log(audioSrc);
-        audio.load(audioSrc);
-        audio.play();
+        if (playingFlag) {
+            audio.pause();
+            audio.currentTime = 0;
+            $("#play-voice").text('播放語音').removeClass('btn-danger');
+            voiceCount = 0;
+            playingFlag = false;
+        } else {
+            $("#play-voice").text('停止播放').addClass('btn-danger');
+            voiceCount = 0;
+            playVoice();
+        }
     });
 
     $('#reset').click(function() {
@@ -72,32 +77,21 @@ $(function() {
 
     function playVoice() {
         playingFlag = true;
-        if (voiceCount >= 7) {
+        voiceCount++;
+        if(voiceCount == 2 && oberon == 0 ||voiceCount == 4 && mordred == 0 || voiceCount == 6 && percival == 0 ){
+            voiceCount++;
+        }
+        if (voiceCount > 7) {
             voiceCount = 0;
             playingFlag = false;
             $("#play-voice").text('播放語音').removeClass('btn-danger');
             return;
         }
-        // Setup the player to autoplay the next track
-        var a = audiojs.createAll({
-            trackEnded: function() {
-                var next = $('.voices li.playing').next();
-                if (!next.length) next = $('ol li').first();
-                next.addClass('playing').siblings().removeClass('playing');
-                audio.load($('a', next).attr('data-src'));
-                audio.play();
-            }
-        });
+        var audioSrc = 'voices/'+Speaker+'/'+voiceCount+'.mp3?032601';
+        audio.load(audioSrc);
+        $("audio")[0].playbackRate = speed;
+        audio.play();
 
-        return;
-        voices[voiceCount].playbackRate = speed;
-        voices[voiceCount].play();
-        voices[voiceCount].pause();
-
-        setTimeout(function() {
-            voices[voiceCount].currentTime = 0;
-            voices[voiceCount].play();
-        }, 2000);
     }
 
     function refreshSetting() {
