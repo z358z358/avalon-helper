@@ -5,7 +5,7 @@ $(function() {
     var oberon, mordred, percival, mormna;
     var checkList = ['oberon', 'mordred', 'percival', 'mormna'];
     var voiceCount = 0,
-        voices;
+        voices, audio;
 
     resizeHeight();
     $(window).resize(resizeHeight);
@@ -49,18 +49,14 @@ $(function() {
     });
 
     $('#play-voice').click(function() {
-        voices = $(".voices ." + Speaker + " audio");
-        if (playingFlag) {
-            voices[voiceCount].pause();
-            voices[voiceCount].currentTime = 0;
-            $("#play-voice").text('播放語音').removeClass('btn-danger');
-            voiceCount = 0;
-            playingFlag = false;
-        } else {
-            $("#play-voice").text('停止播放').addClass('btn-danger');
-            voiceCount = 0;
-            playVoice();
-        }
+        // Setup the player to autoplay the next track
+        voiceCount = 0;
+        voices = audiojs.createAll();
+        audio = voices[0];
+        var audioSrc = $(".voices ." + Speaker + " span").data('src');
+        console.log(audioSrc);
+        audio.load(audioSrc);
+        audio.play();
     });
 
     $('#reset').click(function() {
@@ -74,11 +70,6 @@ $(function() {
         shares: ["twitter", "facebook", "messenger", "line"]
     });
 
-    $("audio").bind('ended', function() {
-        voiceCount++;
-        playVoice();
-    });
-
     function playVoice() {
         playingFlag = true;
         if (voiceCount >= 7) {
@@ -87,6 +78,18 @@ $(function() {
             $("#play-voice").text('播放語音').removeClass('btn-danger');
             return;
         }
+        // Setup the player to autoplay the next track
+        var a = audiojs.createAll({
+            trackEnded: function() {
+                var next = $('.voices li.playing').next();
+                if (!next.length) next = $('ol li').first();
+                next.addClass('playing').siblings().removeClass('playing');
+                audio.load($('a', next).attr('data-src'));
+                audio.play();
+            }
+        });
+
+        return;
         voices[voiceCount].playbackRate = speed;
         voices[voiceCount].play();
         voices[voiceCount].pause();
