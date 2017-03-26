@@ -9,8 +9,9 @@ $(function() {
     voices = audiojs.createAll({ trackEnded: playVoice });
     audio = voices[0];
 
-    resizeHeight();
+    $("#bind-img").load(resizeHeight);
     $(window).resize(resizeHeight);
+    resizeHeight();
 
     if (window.location.hash) {
         hash = window.location.hash.substring(1); //Puts hash in variable, and removes the # character
@@ -78,7 +79,7 @@ $(function() {
     function playVoice() {
         playingFlag = true;
         voiceCount++;
-        if(voiceCount == 2 && oberon == 0 ||voiceCount == 4 && mordred == 0 || voiceCount == 6 && percival == 0 ){
+        if (voiceCount == 2 && oberon == 0 || voiceCount == 4 && mordred == 0 || voiceCount == 6 && percival == 0) {
             voiceCount++;
         }
         if (voiceCount > 7) {
@@ -87,7 +88,7 @@ $(function() {
             $("#play-voice").text('播放語音').removeClass('btn-danger');
             return;
         }
-        var audioSrc = 'voices/'+Speaker+'/'+voiceCount+'.mp3?032601';
+        var audioSrc = 'voices/' + Speaker + '/' + voiceCount + '.mp3?032601';
         audio.load(audioSrc);
         $("audio")[0].playbackRate = speed;
         audio.play();
