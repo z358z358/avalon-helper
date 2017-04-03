@@ -6,6 +6,7 @@ $(function() {
     var checkList = ['oberon', 'mordred', 'percival', 'mormna'];
     var voiceCount = 0,
         voices, audio;
+    var scores = { good: 0, bad: 0 };
     voices = audiojs.createAll({ trackEnded: playVoice });
     audio = voices[0];
 
@@ -74,6 +75,28 @@ $(function() {
 
     $("#share").jsSocials({
         shares: ["twitter", "facebook", "messenger", "line"]
+    });
+
+    $(".zero-hide").hide();
+    $(".btn-score").click(function() {
+        var role = $(this).data('role');
+        var add = parseInt($(this).data('add'));
+        if (role == 'zero') {
+            scores = { good: 0, bad: 0 };
+            $(".zero-hide").hide();
+            $(".role-count").text('');
+        } else if (add) {
+            scores[role] += add;
+            scores[role] = scores[role] < 0 ? 0 : scores[role];
+            var sum = scores.good + scores.bad;
+            sum = sum ? sum : 1;
+            $(".good-bar").css('width', scores.good / sum * 100 + "%");
+            $(".good-bar span").text( parseInt(scores.good / sum * 100) + "%");
+            $(".bad-bar").css('width', scores.bad / sum * 100 + "%");
+            $(".bad-bar span").text( parseInt(scores.bad / sum * 100) + "%");
+            $("span." + role + "-count").text(scores[role]);
+            $(".zero-hide").show();
+        }
     });
 
     function playVoice() {
